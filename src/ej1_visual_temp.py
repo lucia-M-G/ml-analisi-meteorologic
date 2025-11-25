@@ -11,7 +11,7 @@ from analisis import *
 def main():
     print("EJERCICIO 1: COMPARATIVA TEMPERATURAS 2025")
     print("=" * 60)
-
+    
     # Configuración inicial
     crear_carpeta_outputs()
     
@@ -26,6 +26,24 @@ def main():
     # Procesar datos
     print("\nConvirtiendo fechas...")
     convertir_fechas(df_fabra, df_raval)
+    
+    print("Filtrando temperaturas 2025...")
+    temp_fabra, temp_raval = filtrar_temperaturas_2025(df_fabra, df_raval)
+    mostrar_info_temperaturas(temp_fabra, temp_raval)
+    
+    # Calcular estadísticas
+    print("\nCalculando temperatura media mensual...")
+    media_fabra, media_raval = calcular_temperatura_mensual(temp_fabra, temp_raval)
+    mostrar_temperaturas_mensuales(media_fabra, media_raval)
+    
+    # Visualizar datos
+    print("\nCreando gráficos...")
+    crear_grafico_comparativo(media_fabra, media_raval)
+    crear_graficos_separados(media_fabra, media_raval)
+    
+    # Analizar resultados
+    print("\nAnalizando diferencias...")
+    analizar_diferencias(media_fabra, media_raval)
 
 if __name__ == "__main__":
     main()
