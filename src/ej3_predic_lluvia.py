@@ -46,4 +46,10 @@ def analizar_correlaciones(dataframe, precipitacion_diaria):
         except:
             pass
     
-    return correlaciones    
+    return correlaciones  
+
+print("\nCorrelaciones D5 (Fabra):")
+correlaciones_d5 = analizar_correlaciones(dataframe_d5, precipitacion_diaria_d5)
+
+print("Correlaciones X4 (Raval):")
+correlaciones_x4 = analizar_correlaciones(dataframe_x4, precipitacion_diaria_x4)  
