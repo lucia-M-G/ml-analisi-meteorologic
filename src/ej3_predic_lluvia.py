@@ -105,3 +105,21 @@ ax2.set_title('Raval (X4): Días de Lluvia 2025')
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_diagrama_sectores_lluvia.png'))
 plt.close()
+
+meses_nombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+# Barras verticales
+
+# D5
+fig, axes = plt.subplots(4, 3, figsize=(15, 12))
+fig.suptitle('Fabra (D5): Precipitación Diaria 2025')
+for i, ax in enumerate(axes.flat):
+    mes = i + 1
+    datos_mes = prediccion_2025_d5[prediccion_2025_d5.index.month == mes]
+    ax.bar(datos_mes.index.day, datos_mes.values, color='blue', alpha=0.7)
+    ax.set_title(meses_nombres[mes-1])
+    ax.set_ylabel('mm')
+    ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_d5.png'))
+plt.close()
