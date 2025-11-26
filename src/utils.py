@@ -49,9 +49,6 @@ def calcular_temperatura_mensual(temp_fabra, temp_raval):
     return media_fabra, media_raval
 
 def obtener_datos_diarios(dataframe, codigo_variable, agregacion='media'):
-    """
-    Obtiene datos diarios agregados (función de tu compañera)
-    """
     # Filtrar por variable
     dataframe_variable = dataframe[dataframe['CODI_VARIABLE'] == codigo_variable].copy()
     
