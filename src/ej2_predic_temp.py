@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from utilidades import cargar_datos, obtener_datos_diarios
+from utils import cargar_datos
 
 # Configuración de rutas absolutas
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
@@ -14,8 +14,9 @@ os.makedirs(DIRECTORIO_SALIDA, exist_ok=True)
 
 # Cargar datos 
 print("Cargando datos...")
-dataframe_d5 = cargar_datos(os.path.join(DIRECTORIO_DATOS, "Dades_meteorològiques_de_la_XEMA_20251020-D5.csv"))
-dataframe_x4 = cargar_datos(os.path.join(DIRECTORIO_DATOS, "Dades_meteorològiques_de_la_XEMA_20251020-X4.csv"))
+df_fabra, df_raval = cargar_datos()
+dataframe_d5 = df_fabra
+dataframe_x4 = df_raval
 
 print("Procesando temperaturas diarias (D5 - Fabra)...")
 temperatura_diaria_d5 = obtener_datos_diarios(dataframe_d5, 32, 'media')
