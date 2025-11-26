@@ -22,8 +22,15 @@ print("Procesando temperaturas diarias (X4 - Raval)...")
 temperatura_diaria_x4 = obtener_datos_diarios(dataframe_x4, 32, 'media')
 
 historico_d5 = temperatura_diaria_d5[temperatura_diaria_d5.index.year < 2025]
+real_2025_d5 = temperatura_diaria_d5[temperatura_diaria_d5.index.year == 2025]
+
 historico_x4 = temperatura_diaria_x4[temperatura_diaria_x4.index.year < 2025]
+real_2025_x4 = temperatura_diaria_x4[temperatura_diaria_x4.index.year == 2025]
 
 # Calcular medias mensuales
 medias_mensuales_d5 = historico_d5.groupby(historico_d5.index.month).mean()
 medias_mensuales_x4 = historico_x4.groupby(historico_x4.index.month).mean()
+
+meses = range(1, 13)
+prediccion_d5 = medias_mensuales_d5.values
+prediccion_x4 = medias_mensuales_x4.values
