@@ -123,3 +123,17 @@ for i, ax in enumerate(axes.flat):
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_d5.png'))
 plt.close()
+
+# X4
+fig, axes = plt.subplots(4, 3, figsize=(15, 12))
+fig.suptitle('Raval (X4): Precipitación Diaria 2025')
+for i, ax in enumerate(axes.flat):
+    mes = i + 1
+    datos_mes = prediccion_2025_x4[prediccion_2025_x4.index.month == mes]
+    ax.bar(datos_mes.index.day, datos_mes.values, color='green', alpha=0.7)
+    ax.set_title(meses_nombres[mes-1])
+    ax.set_ylabel('mm')
+    ax.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_x4.png'))
+plt.close()
