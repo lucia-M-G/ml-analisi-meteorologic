@@ -167,3 +167,20 @@ for i, ax in enumerate(axes.flat):
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_horizontales_x4.png'))
 plt.close()
+
+# Cálculo de precisión
+def calcular_precision(prediccion, real):
+    fechas_comunes = real.index.intersection(prediccion.index)
+    if len(fechas_comunes) == 0:
+        return 0
+    
+    pred_comun = prediccion.loc[fechas_comunes]
+    real_comun = real.loc[fechas_comunes]
+    
+    pred_bin = (pred_comun > 0)
+    real_bin = (real_comun > 0)
+    
+    aciertos = (pred_bin == real_bin).sum()
+    precision = (aciertos / len(fechas_comunes)) * 100
+    
+    return precision
