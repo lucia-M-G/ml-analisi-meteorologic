@@ -54,6 +54,19 @@ eje1.set_xticklabels(['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'
 eje1.legend()
 eje1.grid(True, alpha=0.3)
 
+# X4 Raval
+eje2.plot(meses, prediccion_x4, 'r--o', label='Predicción')
+if not real_2025_x4.empty:
+    mensual_real_x4 = real_2025_x4.resample('ME').mean()
+    eje2.plot(mensual_real_x4.index.month, mensual_real_x4.values, 'orange', marker='s', linestyle='-', label='Real 2025')
+eje2.set_title('Raval (X4): Predicción vs Realidad 2025')
+eje2.set_xlabel('Mes')
+eje2.set_ylabel('Temperatura (°C)')
+eje2.set_xticks(meses)
+eje2.set_xticklabels(['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'])
+eje2.legend()
+eje2.grid(True, alpha=0.3)
+
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_prediccion_vs_real.png'))
 plt.close()
