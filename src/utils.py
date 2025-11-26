@@ -22,7 +22,15 @@ def cargar_datos(ruta_archivo):
     )
     
     # Parsear DATA_LECTURA a datetime
-    dataframe['DATA_LECTURA'] = pd.to_datetime(dataframe['DATA_LECTURA'], errors='coerce')
+    try:
+        dataframe['DATA_LECTURA'] = pd.to_datetime(
+            dataframe['DATA_LECTURA'], 
+            format='%d/%m/%Y %I:%M:%S %p',  # Formato: "20/10/2025 03:30:00 PM"
+            errors='coerce'
+        )
+    except:
+        # Si falla el formato específico, usar inferencia automática
+        dataframe['DATA_LECTURA'] = pd.to_datetime(dataframe['DATA_LECTURA'], errors='coerce')
     
     print(f"Datos cargados: {len(dataframe)} filas")
     return dataframe
