@@ -7,7 +7,7 @@ from utilidades import cargar_datos, obtener_datos_diarios
 # Configuración de rutas absolutas
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
 DIRECTORIO_DATOS = os.path.join(DIRECTORIO_ACTUAL, "../data")
-DIRECTORIO_SALIDA = os.path.join(DIRECTORIO_ACTUAL, "graficos_generados")
+DIRECTORIO_SALIDA = os.path.join(DIRECTORIO_ACTUAL, "../outputs")
 
 # Crear directorio de salida si no existe
 os.makedirs(DIRECTORIO_SALIDA, exist_ok=True)
@@ -69,7 +69,7 @@ eje2.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_prediccion_vs_real.png'))
-plt.close()
+plt.show()
 
 # GRÁFICO 2: Histogramas para ambas estaciones
 
@@ -95,7 +95,7 @@ eje2.legend()
 
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_histograma_2025.png'))
-plt.close()
+plt.show()
 
 # GRÁFICO 3: Simulación Noviembre para ambas estaciones
 
@@ -125,4 +125,4 @@ eje2.legend()
 
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_simulacion_noviembre.png'))
-plt.close()
+plt.show()
