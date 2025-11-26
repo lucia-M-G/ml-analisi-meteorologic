@@ -5,10 +5,12 @@ import os
 from utils import cargar_datos, obtener_datos_diarios
 
 # Configuración de rutas absolutas
-DIRECTORIO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
-RAIZ_PROYECTO = os.path.abspath(os.path.join(DIRECTORIO_SCRIPT, "../../.."))
-DIRECTORIO_DATOS = os.path.join(RAIZ_PROYECTO, "analysis/ac06-pandes-al-meteocat-alexandrasofronie_luciamartinez/data")
-DIRECTORIO_SALIDA = os.path.join(RAIZ_PROYECTO, "client/public/generated_plots")
+DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
+DIRECTORIO_DATOS = os.path.join(DIRECTORIO_ACTUAL, "../data")
+DIRECTORIO_SALIDA = os.path.join(DIRECTORIO_ACTUAL, "graficos_generados")
+
+# Crear directorio de salida si no existe
+os.makedirs(DIRECTORIO_SALIDA, exist_ok=True)
 
 # Cargar datos 
 print("Cargando datos...")
@@ -51,3 +53,7 @@ eje1.set_xticks(meses)
 eje1.set_xticklabels(['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'])
 eje1.legend()
 eje1.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_prediccion_vs_real.png'))
+plt.close()
