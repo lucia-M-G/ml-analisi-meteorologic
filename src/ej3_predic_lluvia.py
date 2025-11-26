@@ -184,3 +184,15 @@ def calcular_precision(prediccion, real):
     precision = (aciertos / len(fechas_comunes)) * 100
     
     return precision
+
+precision_d5 = calcular_precision(prediccion_2025_d5, real_2025_d5)
+precision_x4 = calcular_precision(prediccion_2025_x4, real_2025_x4)
+
+print(f"\nPrecisión de la predicción:")
+print(f"Fabra (D5): {precision_d5:.1f}%")
+print(f"Raval (X4): {precision_x4:.1f}%")
+
+# Guardar en archivo de texto los resultados
+with open(os.path.join(DIRECTORIO_SALIDA, 'ej3_resultados_precision.txt'), 'w') as f:
+    f.write(f"Fabra (D5): {precision_d5:.1f}%\n")
+    f.write(f"Raval (X4): {precision_x4:.1f}%")
