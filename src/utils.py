@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def cargar_datos(ruta_archivo):
     """
@@ -25,3 +26,28 @@ def cargar_datos(ruta_archivo):
     
     print(f"Datos cargados: {len(dataframe)} filas")
     return dataframe
+
+def obtener_datos_diarios(dataframe, codigo_variable, agregacion='media'):
+    """
+    Obtiene datos diarios agregados para una variable específica
+    """
+    # Filtrar por variable
+    dataframe_variable = dataframe[dataframe['CODI_VARIABLE'] == codigo_variable].copy()
+    
+    if len(dataframe_variable) == 0:
+        print(f"Advertencia: No se encontraron datos para la variable {codigo_variable}")
+        return pd.Series(dtype=float)
+    
+    # Configurar índice de tiempo
+    dataframe_variable.dropna(subset=['DATA_LECTURA'], inplace=True)
+    dataframe_variable.set_index('DATA_LECTURA', inplace=True)
+   
+    if agregacion == 'media':
+        diario = dataframe_variable['VALOR_LECTURA'].resample('D').mean()
+    elif agregacion == 'suma':
+        diario = dataframe_variable['VALOR_LECTURA'].resample('D').sum()
+    else:
+        diario = dataframe_variable['VALOR_LECTURA'].resample('D').mean()
+    
+    print(f"Datos diarios para variable {codigo_variable}: {len(diario)} días")
+    return diario
