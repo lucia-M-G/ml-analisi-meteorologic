@@ -39,7 +39,8 @@ ac06-pandes-al-meteocat-alexandrasofronie_luciamartinez/
 - La diferència mitjana entre estacions és d'aproximadament 2-3°C
 
 **Subplots Individuals:**
-![Subplots Temperatures](assets/temperatura_subplots.png)
+![Subplots Temperatures](assets/temperatura_subplots_fabra.png)
+![Subplots Temperatures](assets/temperatura_subplots_raval.png)
 
 ### Predicció de Temperatura 2025 vs Real
 
