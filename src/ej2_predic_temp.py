@@ -96,3 +96,11 @@ eje2.legend()
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_histograma_2025.png'))
 plt.close()
+
+# GRÁFICO 3: Simulación Noviembre para ambas estaciones
+
+noviembre_historico_d5 = historico_d5[historico_d5.index.month == 11].dropna()
+noviembre_historico_x4 = historico_x4[historico_x4.index.month == 11].dropna()
+
+noviembre_simulado_d5 = np.random.choice(noviembre_historico_d5.values, size=30)
+noviembre_simulado_x4 = np.random.choice(noviembre_historico_x4.values, size=30)
