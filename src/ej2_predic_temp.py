@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from utils import cargar_datos, obtener_datos_diarios
+from utilidades import cargar_datos, obtener_datos_diarios
 
 # Configuración de rutas absolutas
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
