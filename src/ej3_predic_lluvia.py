@@ -29,7 +29,6 @@ historico_x4 = precipitacion_diaria_x4[precipitacion_diaria_x4.index.year < 2025
 real_2025_x4 = precipitacion_diaria_x4[precipitacion_diaria_x4.index.year == 2025]
 
 # Analizar correlaciones
-
 def analizar_correlaciones(dataframe, precipitacion_diaria):
     variables_interes = [(32, 'Temperatura'), (33, 'Humedad'), (36, 'Presión')]
     correlaciones = {}
@@ -84,3 +83,25 @@ def predecir_precipitacion(historico):
 
 print("\nGenerando predicciones 2025...")
 fechas_2025 = pd.date_range(start='2025-01-01', end='2025-12-31', freq='D')
+
+prediccion_2025_d5 = pd.Series(predecir_precipitacion(historico_d5)[:len(fechas_2025)], index=fechas_2025)
+prediccion_2025_x4 = pd.Series(predecir_precipitacion(historico_x4)[:len(fechas_2025)], index=fechas_2025)
+
+# Diagramas de sectores
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+lluvia_d5 = (prediccion_2025_d5 > 0).sum()
+no_lluvia_d5 = (prediccion_2025_d5 == 0).sum()
+ax1.pie([lluvia_d5, no_lluvia_d5], labels=['Llueve', 'No Llueve'], 
+        autopct='%1.1f%%', colors=['lightblue', 'gold'])
+ax1.set_title('Fabra (D5): Días de Lluvia 2025')
+
+lluvia_x4 = (prediccion_2025_x4 > 0).sum()
+no_lluvia_x4 = (prediccion_2025_x4 == 0).sum()
+ax2.pie([lluvia_x4, no_lluvia_x4], labels=['Llueve', 'No Llueve'], 
+        autopct='%1.1f%%', colors=['lightgreen', 'gold'])
+ax2.set_title('Raval (X4): Días de Lluvia 2025')
+
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_diagrama_sectores_lluvia.png'))
+plt.close()
