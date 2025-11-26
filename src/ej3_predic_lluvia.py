@@ -55,7 +55,6 @@ print("Correlaciones X4 (Raval):")
 correlaciones_x4 = analizar_correlaciones(dataframe_x4, precipitacion_diaria_x4)  
 
 # Algoritomo predicción
-
 def predecir_precipitacion(historico):
     historico_df = pd.DataFrame({
         'fecha': historico.index,
@@ -82,3 +81,6 @@ def predecir_precipitacion(historico):
         predicciones.append(prediccion)
     
     return predicciones
+
+print("\nGenerando predicciones 2025...")
+fechas_2025 = pd.date_range(start='2025-01-01', end='2025-12-31', freq='D')
