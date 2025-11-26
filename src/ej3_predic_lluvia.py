@@ -109,24 +109,25 @@ def predecir_precipitacion(historico):
 def crear_diagramas_sectores(pred_d5, pred_x4):
     print("Creando diagramas de sectores...")
     
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
     
     # Fabra (D5)
     lluvia_d5 = (pred_d5 > 0).sum()
     no_lluvia_d5 = (pred_d5 == 0).sum()
     ax1.pie([lluvia_d5, no_lluvia_d5], labels=['Llueve', 'No Llueve'], 
-            autopct='%1.1f%%', colors=['lightblue', 'gold'])
-    ax1.set_title('Fabra (D5): Días de Lluvia 2025')
+            autopct='%1.1f%%', colors=['lightblue', 'gold'], startangle=90)
+    ax1.set_title('Fabra (D5): Días de Lluvia 2025', fontsize=12, fontweight='bold')
     
     # Raval (X4)
     lluvia_x4 = (pred_x4 > 0).sum()
     no_lluvia_x4 = (pred_x4 == 0).sum()
     ax2.pie([lluvia_x4, no_lluvia_x4], labels=['Llueve', 'No Llueve'], 
-            autopct='%1.1f%%', colors=['lightgreen', 'gold'])
-    ax2.set_title('Raval (X4): Días de Lluvia 2025')
+            autopct='%1.1f%%', colors=['lightgreen', 'gold'], startangle=90)
+    ax2.set_title('Raval (X4): Días de Lluvia 2025', fontsize=12, fontweight='bold')
     
-    plt.tight_layout()
-    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_diagrama_sectores_lluvia.png'))
+    plt.tight_layout(pad=3.0)
+    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_diagrama_sectores_lluvia.png'),
+                dpi=150, bbox_inches='tight')
     plt.show()
 
 def crear_barras_verticales(pred_d5, pred_x4):
@@ -135,31 +136,43 @@ def crear_barras_verticales(pred_d5, pred_x4):
     meses_nombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
     
     # Fabra (D5)
-    fig, axes = plt.subplots(4, 3, figsize=(15, 12))
-    fig.suptitle('Fabra (D5): Precipitación Diaria 2025')
+    fig, axes = plt.subplots(4, 3, figsize=(14, 10))
+    fig.suptitle('Fabra (D5): Precipitación Diaria 2025', fontsize=14, fontweight='bold', y=0.98)
+    
     for i, ax in enumerate(axes.flat):
         mes = i + 1
         datos_mes = pred_d5[pred_d5.index.month == mes]
-        ax.bar(datos_mes.index.day, datos_mes.values, color='blue', alpha=0.7)
-        ax.set_title(meses_nombres[mes-1])
-        ax.set_ylabel('mm')
+        ax.bar(datos_mes.index.day, datos_mes.values, color='blue', alpha=0.7, width=0.8)
+        ax.set_title(meses_nombres[mes-1], fontsize=10, fontweight='bold')
+        ax.set_ylabel('mm', fontsize=9)
+        ax.tick_params(axis='both', which='major', labelsize=8)
         ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_d5.png'))
+        # Mostrar cada 5 días
+        ax.set_xticks(range(1, 32, 5))
+        # Rotar etiquetas del eje X para mejor legibilidad
+        ax.set_xticklabels(range(1, 32, 5), rotation=45)
+    plt.tight_layout(pad=2.0)
+    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_d5.png'),
+                dpi=150, bbox_inches='tight')
     plt.show()
     
     # Raval (X4)
-    fig, axes = plt.subplots(4, 3, figsize=(15, 12))
-    fig.suptitle('Raval (X4): Precipitación Diaria 2025')
+    fig, axes = plt.subplots(4, 3, figsize=(14, 10))
+    fig.suptitle('Raval (X4): Precipitación Diaria 2025', fontsize=14, fontweight='bold', y=0.98)
+    
     for i, ax in enumerate(axes.flat):
         mes = i + 1
         datos_mes = pred_x4[pred_x4.index.month == mes]
-        ax.bar(datos_mes.index.day, datos_mes.values, color='green', alpha=0.7)
-        ax.set_title(meses_nombres[mes-1])
-        ax.set_ylabel('mm')
+        ax.bar(datos_mes.index.day, datos_mes.values, color='green', alpha=0.7, width=0.8)
+        ax.set_title(meses_nombres[mes-1], fontsize=10, fontweight='bold')
+        ax.set_ylabel('mm', fontsize=9)
+        ax.tick_params(axis='both', which='major', labelsize=8)
         ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_x4.png'))
+        ax.set_xticks(range(1, 32, 5))
+        ax.set_xticklabels(range(1, 32, 5), rotation=45)
+    plt.tight_layout(pad=2.0)
+    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_verticales_x4.png'),
+                dpi=150, bbox_inches='tight')
     plt.show()
 
 def crear_barras_horizontales(pred_d5, pred_x4):
@@ -168,31 +181,43 @@ def crear_barras_horizontales(pred_d5, pred_x4):
     meses_nombres = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
     
     # Fabra (D5)
-    fig, axes = plt.subplots(4, 3, figsize=(15, 12))
-    fig.suptitle('Fabra (D5): Precipitación Diaria 2025')
+    fig, axes = plt.subplots(4, 3, figsize=(14, 10))
+    fig.suptitle('Fabra (D5): Precipitación Diaria 2025', fontsize=14, fontweight='bold', y=0.98)
+    
     for i, ax in enumerate(axes.flat):
         mes = i + 1
         datos_mes = pred_d5[pred_d5.index.month == mes]
         ax.barh(datos_mes.index.day, datos_mes.values, color='blue', alpha=0.7)
-        ax.set_title(meses_nombres[mes-1])
-        ax.set_xlabel('mm')
+        ax.set_title(meses_nombres[mes-1], fontsize=10, fontweight='bold')
+        ax.set_xlabel('mm', fontsize=9)
+        ax.tick_params(axis='both', which='major', labelsize=8)
         ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_horizontales_d5.png'))
+        # Limitar eje Y para que se vea más bonito
+        ax.set_yticks(range(1, 32, 5))
+        ax.set_ylim(0.5, 31.5)
+    plt.tight_layout(pad=2.0)
+    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_horizontales_d5.png'),
+                dpi=150, bbox_inches='tight')
     plt.show()
     
     # Raval (X4)
-    fig, axes = plt.subplots(4, 3, figsize=(15, 12))
-    fig.suptitle('Raval (X4): Precipitación Diaria 2025')
+    fig, axes = plt.subplots(4, 3, figsize=(14, 10))
+    fig.suptitle('Raval (X4): Precipitación Diaria 2025', fontsize=14, fontweight='bold', y=0.98)
+
     for i, ax in enumerate(axes.flat):
         mes = i + 1
         datos_mes = pred_x4[pred_x4.index.month == mes]
-        ax.barh(datos_mes.index.day, datos_mes.values, color='green', alpha=0.7)
-        ax.set_title(meses_nombres[mes-1])
-        ax.set_xlabel('mm')
+        ax.barh(datos_mes.index.day, datos_mes.values, color='green', alpha=0.7, height=0.8)
+        ax.set_title(meses_nombres[mes-1], fontsize=10, fontweight='bold')
+        ax.set_xlabel('mm', fontsize=9)
+        ax.tick_params(axis='both', which='major', labelsize=8)
         ax.grid(True, alpha=0.3)
-    plt.tight_layout()
-    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_horizontales_x4.png'))
+        ax.set_yticks(range(1, 32, 5))
+        ax.set_ylim(0.5, 31.5)
+    
+    plt.tight_layout(pad=2.0)
+    plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej3_barras_horizontales_x4.png'), 
+                dpi=150, bbox_inches='tight')
     plt.show()
 
 def calcular_precision(prediccion, real):
