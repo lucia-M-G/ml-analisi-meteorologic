@@ -104,3 +104,25 @@ noviembre_historico_x4 = historico_x4[historico_x4.index.month == 11].dropna()
 
 noviembre_simulado_d5 = np.random.choice(noviembre_historico_d5.values, size=30)
 noviembre_simulado_x4 = np.random.choice(noviembre_historico_x4.values, size=30)
+
+figura, (eje1, eje2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# Simulación D5 Fabra
+eje1.plot(range(1, 31), noviembre_simulado_d5, 'b-x', label='Simulación Nov 2025', linewidth=2, markersize=6)
+eje1.set_title('Fabra (D5): Simulación Temperaturas Noviembre 2025')
+eje1.set_xlabel('Día')
+eje1.set_ylabel('Temperatura (°C)')
+eje1.grid(True, alpha=0.3)
+eje1.legend()
+
+# Simulación X4 Raval
+eje2.plot(range(1, 31), noviembre_simulado_x4, 'r-x', label='Simulación Nov 2025', linewidth=2, markersize=6)
+eje2.set_title('Raval (X4): Simulación Temperaturas Noviembre 2025')
+eje2.set_xlabel('Día')
+eje2.set_ylabel('Temperatura (°C)')
+eje2.grid(True, alpha=0.3)
+eje2.legend()
+
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_simulacion_noviembre.png'))
+plt.close()
