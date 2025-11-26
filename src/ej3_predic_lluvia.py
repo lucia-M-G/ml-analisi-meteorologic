@@ -172,7 +172,7 @@ plt.close()
 def calcular_precision(prediccion, real):
     fechas_comunes = real.index.intersection(prediccion.index)
     if len(fechas_comunes) == 0:
-        return 0
+        return 0, 0, 0, 0
     
     pred_comun = prediccion.loc[fechas_comunes]
     real_comun = real.loc[fechas_comunes]
@@ -182,17 +182,35 @@ def calcular_precision(prediccion, real):
     
     aciertos = (pred_bin == real_bin).sum()
     precision = (aciertos / len(fechas_comunes)) * 100
-    
-    return precision
 
-precision_d5 = calcular_precision(prediccion_2025_d5, real_2025_d5)
-precision_x4 = calcular_precision(prediccion_2025_x4, real_2025_x4)
+    # Calcular días con lluvia
+    dias_predicho_lluvia = pred_bin.sum()
+    dias_real_lluvia = real_bin.sum()
+    
+    return precision, dias_predicho_lluvia, dias_real_lluvia, len(fechas_comunes)
+
+precision_d5, pred_lluvia_d5, real_lluvia_d5, total_d5 = calcular_precision(prediccion_2025_d5, real_2025_d5)
+precision_x4, pred_lluvia_x4, real_lluvia_x4, total_x4 = calcular_precision(prediccion_2025_x4, real_2025_x4)
 
 print(f"\nPrecisión de la predicción:")
 print(f"Fabra (D5): {precision_d5:.1f}%")
+print(f"  - Días predichos con lluvia: {pred_lluvia_d5}")
+print(f"  - Días reales con lluvia: {real_lluvia_d5}")
+print(f"  - Días analizados: {total_d5}")
+
 print(f"Raval (X4): {precision_x4:.1f}%")
+print(f"  - Días predichos con lluvia: {pred_lluvia_x4}")
+print(f"  - Días reales con lluvia: {real_lluvia_x4}")
+print(f"  - Días analizados: {total_x4}")
 
 # Guardar en archivo de texto los resultados
-with open(os.path.join(DIRECTORIO_SALIDA, 'ej3_resultados_precision.txt'), 'w') as f:
+with open(os.path.join(DIRECTORIO_SALIDA, 'ej3_resultados_precision.txt'), 'w', encoding='utf-8') as f:
     f.write(f"Fabra (D5): {precision_d5:.1f}%\n")
-    f.write(f"Raval (X4): {precision_x4:.1f}%")
+    f.write(f"Días predichos con lluvia: {pred_lluvia_d5}\n")
+    f.write(f"Días reales con lluvia: {real_lluvia_d5}\n")
+    f.write(f"Días analizados: {total_d5}\n\n")
+
+    f.write(f"Raval (X4): {precision_x4:.1f}%\n")
+    f.write(f"Días predichos con lluvia: {pred_lluvia_x4}\n")
+    f.write(f"Días reales con lluvia: {real_lluvia_x4}\n")
+    f.write(f"Días analizados: {total_x4}\n")
