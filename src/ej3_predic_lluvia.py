@@ -21,3 +21,29 @@ dataframe_x4 = cargar_datos(os.path.join(DIRECTORIO_DATOS, "Dades_meteorològiqu
 print("Procesando Precipitación Diaria...")
 precipitacion_diaria_d5 = obtener_datos_diarios(dataframe_d5, 35, 'suma')
 precipitacion_diaria_x4 = obtener_datos_diarios(dataframe_x4, 35, 'suma')
+
+historico_d5 = precipitacion_diaria_d5[precipitacion_diaria_d5.index.year < 2025]
+real_2025_d5 = precipitacion_diaria_d5[precipitacion_diaria_d5.index.year == 2025]
+
+historico_x4 = precipitacion_diaria_x4[precipitacion_diaria_x4.index.year < 2025]
+real_2025_x4 = precipitacion_diaria_x4[precipitacion_diaria_x4.index.year == 2025]
+
+# Analizar correlaciones
+
+def analizar_correlaciones(dataframe, precipitacion_diaria):
+    variables_interes = [(32, 'Temperatura'), (33, 'Humedad'), (36, 'Presión')]
+    correlaciones = {}
+    
+    for codigo_variable, nombre_variable in variables_interes:
+        try:
+            variable_diaria = obtener_datos_diarios(dataframe, codigo_variable, 'media')
+            ppt_alineado, var_alineado = precipitacion_diaria.align(variable_diaria, join='inner')
+            
+            if len(ppt_alineado) > 10:
+                correlacion = ppt_alineado.corr(var_alineado)
+                correlaciones[codigo_variable] = correlacion
+                print(f"  {nombre_variable}: {correlacion:.3f}")
+        except:
+            pass
+    
+    return correlaciones    
