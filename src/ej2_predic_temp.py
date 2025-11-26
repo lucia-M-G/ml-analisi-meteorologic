@@ -34,3 +34,20 @@ medias_mensuales_x4 = historico_x4.groupby(historico_x4.index.month).mean()
 meses = range(1, 13)
 prediccion_d5 = medias_mensuales_d5.values
 prediccion_x4 = medias_mensuales_x4.values
+
+# GRÁFICO 1: Predicción vs Realidad para ambas estaciones
+
+figura, (eje1, eje2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# D5 Fabra
+eje1.plot(meses, prediccion_d5, 'b--o', label='Predicción')
+if not real_2025_d5.empty:
+    mensual_real_d5 = real_2025_d5.resample('ME').mean()
+    eje1.plot(mensual_real_d5.index.month, mensual_real_d5.values, 'g-s', label='Real 2025')
+eje1.set_title('Fabra (D5): Predicción vs Realidad 2025')
+eje1.set_xlabel('Mes')
+eje1.set_ylabel('Temperatura (°C)')
+eje1.set_xticks(meses)
+eje1.set_xticklabels(['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'])
+eje1.legend()
+eje1.grid(True, alpha=0.3)
