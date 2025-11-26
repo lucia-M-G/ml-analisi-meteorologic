@@ -53,3 +53,32 @@ correlaciones_d5 = analizar_correlaciones(dataframe_d5, precipitacion_diaria_d5)
 
 print("Correlaciones X4 (Raval):")
 correlaciones_x4 = analizar_correlaciones(dataframe_x4, precipitacion_diaria_x4)  
+
+# Algoritomo predicción
+
+def predecir_precipitacion(historico):
+    historico_df = pd.DataFrame({
+        'fecha': historico.index,
+        'dia_año': historico.index.dayofyear,
+        'precipitacion': historico.values
+    })
+    
+    predicciones = []
+    for dia in range(1, 366):
+        datos_dia = historico_df[historico_df['dia_año'] == dia]
+        
+        if len(datos_dia) > 0:
+            prob_lluvia = (datos_dia['precipitacion'] > 0).mean()
+            media_lluvia = datos_dia[datos_dia['precipitacion'] > 0]['precipitacion'].mean()
+            
+            if np.random.random() < prob_lluvia:
+                variacion = np.random.normal(0, media_lluvia * 0.3)
+                prediccion = max(0.1, media_lluvia + variacion)
+            else:
+                prediccion = 0.0
+        else:
+            prediccion = 0.0
+            
+        predicciones.append(prediccion)
+    
+    return predicciones
