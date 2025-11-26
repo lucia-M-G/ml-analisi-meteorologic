@@ -1,0 +1,9 @@
+Fabra (D5): 66.6%
+Días predichos con lluvia: 75
+Días reales con lluvia: 82
+Días analizados: 344
+
+Raval (X4): 64.8%
+Días predichos con lluvia: 72
+Días reales con lluvia: 77
+Días analizados: 344

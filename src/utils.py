@@ -11,8 +11,8 @@ def crear_carpeta_outputs():
     os.makedirs('outputs', exist_ok=True)
 
 def cargar_datos():
-    df_fabra = pd.read_csv('data/D5_Observatori_Fabra.csv', dtype={'VALOR_LECTURA': str})
-    df_raval = pd.read_csv('data/X4_Estacio_Raval.csv', dtype={'VALOR_LECTURA': str})
+    df_fabra = pd.read_csv('data/Dades_meteorològiques_de_la_XEMA_20251020-D5.csv', dtype={'VALOR_LECTURA': str})
+    df_raval = pd.read_csv('data/Dades_meteorològiques_de_la_XEMA_20251020-X4.csv', dtype={'VALOR_LECTURA': str})
     return df_fabra, df_raval
 
 def convertir_fechas(df_fabra, df_raval):
@@ -56,6 +56,16 @@ def obtener_datos_diarios(dataframe, codigo_variable, agregacion='media'):
         print(f"Advertencia: No se encontraron datos para la variable {codigo_variable}")
         return pd.Series(dtype=float)
     
+    # Pasar a num
+    dataframe_variable['VALOR_LECTURA'] = (
+        dataframe_variable['VALOR_LECTURA']
+        .astype(str)
+        # Reemplazar comas por puntos
+        .str.replace(',', '.') 
+        # Convertir a número
+        .apply(pd.to_numeric, errors='coerce')
+    )
+
     # Configurar índice de tiempo
     dataframe_variable.dropna(subset=['DATA_LECTURA'], inplace=True)
     dataframe_variable.set_index('DATA_LECTURA', inplace=True)
