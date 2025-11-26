@@ -70,3 +70,29 @@ eje2.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_prediccion_vs_real.png'))
 plt.close()
+
+# GRÁFICO 2: Histogramas para ambas estaciones
+
+figura, (eje1, eje2) = plt.subplots(1, 2, figsize=(14, 5))
+
+# Histograma D5 Fabra
+eje1.hist(historico_d5.values, bins=30, color='skyblue', edgecolor='black', alpha=0.7, label='Histórico')
+if not real_2025_d5.empty:
+    eje1.hist(real_2025_d5.values, bins=30, color='orange', edgecolor='black', alpha=0.5, label='Real 2025')
+eje1.set_title('Fabra (D5): Distribución Temperaturas')
+eje1.set_xlabel('Temperatura (°C)')
+eje1.set_ylabel('Días')
+eje1.legend()
+
+# Histograma X4 Raval
+eje2.hist(historico_x4.values, bins=30, color='lightgreen', edgecolor='black', alpha=0.7, label='Histórico')
+if not real_2025_x4.empty:
+    eje2.hist(real_2025_x4.values, bins=30, color='coral', edgecolor='black', alpha=0.5, label='Real 2025')
+eje2.set_title('Raval (X4): Distribución Temperaturas')
+eje2.set_xlabel('Temperatura (°C)')
+eje2.set_ylabel('Días')
+eje2.legend()
+
+plt.tight_layout()
+plt.savefig(os.path.join(DIRECTORIO_SALIDA, 'ej2_histograma_2025.png'))
+plt.close()
