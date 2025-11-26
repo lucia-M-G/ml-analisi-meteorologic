@@ -1,3 +1,6 @@
 # Datos
 data/
 *.csv
+
+# Gráficos de salida
+output/
